@@ -1,5 +1,5 @@
 import flet as ft
-
+from flet import app
 
 def main(page: ft.Page):
   page.title = "Silkscreen Xpress - BOM Calculator"
@@ -308,4 +308,5 @@ def main(page: ft.Page):
   )
 
 
-ft.app(main)
+if __name__ == "__main__":
+    ft.app(target=main)
