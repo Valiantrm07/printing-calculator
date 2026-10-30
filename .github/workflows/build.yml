@@ -2,13 +2,14 @@ name: Build Flet APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   build:
+    name: Build APK
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -16,20 +17,16 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Flet and Dependencies
+      - name: Install Flet CLI
         run: |
-          pip install --upgrade pip
-          pip install flet==0.25.2
+          python -m pip install --upgrade pip
+          pip install flet
 
-      - name: Build APK with Flet
-        uses: flet-dev/App-Build-Action@v1
-        with:
-          platform: android
-          target: main.py
-          output: output/apk
-
+      - name: Build APK
+        run: flet build apk
+        
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: silkscreen-xpress-apk
-          path: output/apk/*.apk
+          name: app-apk
+          path: build/sapk/app-release.apk
